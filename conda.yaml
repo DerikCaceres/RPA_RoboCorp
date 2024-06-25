@@ -99,7 +99,6 @@ dependencies:
     - robotframework==6.1.1
     - robotframework-pythonlibcore==4.4.1
     - robotframework-requests==0.9.7
-    - robotframework-sapguilibrary==1.1
     - robotframework-seleniumlibrary==6.5.0
     - robotframework-seleniumtestability==2.1.0
     - rpaframework==28.6.0
