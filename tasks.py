@@ -42,20 +42,13 @@ def t02_project_process():
         search_phrase = Settings.search_phrase
         date_range = Settings.date_range
 
-    # Obtém os dados das notícias
-    news_scraper = P002_Access_Site(search_phrase, date_range)
-    news_data = news_scraper()
+    # Get news data
+    news_data = P002_Access_Site(search_phrase, date_range)
+    news_data()
 
-    # Chama a task t03_create_excel com o argumento news_data
-    t03_create_excel(news_data=news_data)
-
-
-@task
-def t03_create_excel(news_data):
-    # Escreve no arquivo Excel
-    P003_Write_In_Excel_File(news_data=news_data)
-
-    logging.info("Bot execution completed.")
+    # Write Excel File
+    P003_Write_In_Excel_File(news_data=news_data.news_data)
 
 
     logging.info("Bot execution completed.")
+

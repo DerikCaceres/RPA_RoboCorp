@@ -5,11 +5,9 @@ tasks:
   Project Setup:
     shell: python -m robocorp.tasks run -t t01_project_setup tasks.py
 
-  GetNews:
+  GetNewsAndCreateExcel:
     shell: python -m robocorp.tasks run -t t02_project_process tasks.py
 
-  CreateExcel:
-    shell: python -m robocorp.tasks run -t t03_create_excel -- --news_data NEWS_DATA tasks.py
 
 environmentConfigs:
   - environment_windows_amd64_freeze.yaml
