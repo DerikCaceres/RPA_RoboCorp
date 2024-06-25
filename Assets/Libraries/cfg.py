@@ -1,15 +1,3 @@
-from datetime import datetime
-import os
-
-
-       
-class Global():
-    
-    begin_time = datetime.now()
-    
-    log_directory = begin_time.strftime('./History/%Y/%m/%d/%Y-%m-%d %Hh%Mm%Ss')
-    
-    errors = list()
 
 
 class Settings():
@@ -19,7 +7,6 @@ class Settings():
     date_range = 2
     images_path = "Assets\\Libraries\\Images"
     worksheet_news_path = "output\\news.xlsx"
-    log_worksheet = os.path.join(Global.log_directory, "Final_worksheet\\Woksheet.log")
     web_elements = {
         "search":"xpath://button[@data-element='search-button']",
         "search_bar":"xpath://input[@data-element='search-form-input']",
