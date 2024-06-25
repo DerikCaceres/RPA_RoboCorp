@@ -36,19 +36,8 @@ def Count_ocurrences(title, description):
     return ocurrences_title + ocurrences_description
 
 
-
-
-
-Sim, podemos simplificar a lógica sem depender de bibliotecas externas como babel. Vamos usar arrays com os nomes completos e abreviados dos meses em inglês e criar uma função que retorna os meses de acordo com o número de meses anteriores que você deseja obter.
-
-Aqui está um exemplo de como você pode fazer isso:
-
-python
-Copiar código
-from datetime import datetime
-
 def Obtain_months(parametro):
-    # Arrays com os nomes completos e abreviados dos meses em inglês
+
     full_months = ["January", "February", "March", "April", "May", "June",
                    "July", "August", "September", "October", "November", "December"]
     abbr_months = ["Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.",
