@@ -28,10 +28,9 @@ def t01_project_setup():
 
     logging.info("Arquivo Excel criado com sucesso.")
     
-
 @task
 def t02_project_process():
-        # Access the current input work item
+    # Access the current input work item
     item = workitems.inputs.current
     print("Received payload:", item.payload)
     
@@ -40,11 +39,14 @@ def t02_project_process():
     date_range = item.payload.get("date_range")
 
     # Obtém os dados das notícias
-    news_data = P002_Access_Site(search_phrase, date_range)
-    news_data()
+    news_scraper = P002_Access_Site(search_phrase, date_range)
+    news_data = news_scraper()
+    
+    return news_data  # Return the news_data after scraping
 
+@task
+def t03_create_excel(news_data):
     # Escreve no arquivo Excel
-    P003_Write_In_Excel_File(news_data=news_data.news_data)
-
+    P003_Write_In_Excel_File(news_data=news_data)
 
     logging.info("Bot execution completed.")
