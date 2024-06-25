@@ -31,12 +31,16 @@ def t01_project_setup():
 @task
 def t02_project_process():
     # Access the current input work item
-    item = workitems.inputs.current
-    print("Received payload:", item.payload)
-    
-    # Extracting 'search_phrase' and 'date_range' from the payload
-    search_phrase = item.payload.get("search_phrase")
-    date_range = item.payload.get("date_range")
+    try:
+        item = workitems.inputs.current
+        print("Received payload:", item.payload)
+        
+        # Extracting 'search_phrase' and 'date_range' from the payload
+        search_phrase = item.payload.get("search_phrase")
+        date_range = item.payload.get("date_range")
+    except:
+        search_phrase = Settings.search_phrase
+        date_range = Settings.date_range
 
     # Obtém os dados das notícias
     news_scraper = P002_Access_Site(search_phrase, date_range)
@@ -45,7 +49,14 @@ def t02_project_process():
     return news_data  # Return the news_data after scraping
 
 @task
-def t03_create_excel(news_data):
+def t03_create_excel():
+    # Access the current input work item
+    item = workitems.inputs.current
+    print("Received payload:", item.payload)
+    
+    # Extracting 'news_data' from the payload
+    news_data = item.payload.get("news_data")
+    
     # Escreve no arquivo Excel
     P003_Write_In_Excel_File(news_data=news_data)
 
