@@ -1,7 +1,9 @@
 
+import os
 from RPA.Browser.Selenium import Selenium
 from Assets.Libraries.Data.data import Obtain_months
 
+from Assets.Libraries.file import zip_folder
 from Assets.Libraries.selenium import Get_News_Atributtes
 from Assets.Libraries.cfg import Settings
 import logging
@@ -90,5 +92,7 @@ class P002_Access_Site:
                 self.browser.go_to(next_page_url)
 
         logging.info("Informações das noticias obtidas")
-        
+
+        zip_output_path = os.path.join("output", "Images.zip")
+        zip_folder(Settings.images_path, zip_output_path)
         return news_data

@@ -13,6 +13,7 @@ dependencies:
     - rpaframework==28.6.0        # https://rpaframework.org/releasenotes.html
     - robocorp==2.0.2             # https://pypi.org/project/robocorp
     - robocorp-browser==2.3.3     # https://pypi.org/project/robocorp-browser
+    - babel=2.9.1
     - coloredlogs==15.0.1
     - beautifulsoup4==4.12.3
     - cached-property==1.5.2
@@ -86,8 +87,6 @@ dependencies:
     - pytz==2024.1
     - pytz-deprecation-shim==0.1.0.post0
     - pytzdata==2020.1
-    - pywin32==306
-    - pywinauto==0.6.8
     - PyYAML==6.0.1
     - referencing==0.35.1
     - requests==2.32.3
@@ -101,7 +100,6 @@ dependencies:
     - robotframework==6.1.1
     - robotframework-pythonlibcore==4.4.1
     - robotframework-requests==0.9.7
-    - robotframework-sapguilibrary==1.1
     - robotframework-seleniumlibrary==6.5.0
     - robotframework-seleniumtestability==2.1.0
     - rpaframework==28.6.0

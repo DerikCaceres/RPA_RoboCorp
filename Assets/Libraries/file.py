@@ -4,7 +4,7 @@ import io
 import json
 import os
 import shutil
-
+import zipfile
 
 def ReadJson(file):
     """Read json file and transform into dict"""
@@ -37,3 +37,17 @@ def CreateFile(path, text):
     f = open(path, "w", encoding='utf-8')
     f.write(text)
     f.close()
+
+
+
+def zip_folder(folder_path, output_path):
+    """Zip the contents of an entire folder (folder_path) and save it to output_path."""
+    with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for root, dirs, files in os.walk(folder_path):
+            for file in files:
+                file_path = os.path.join(root, file)
+                arcname = os.path.relpath(file_path, start=folder_path)
+                zipf.write(file_path, arcname=arcname)
+
+
+
