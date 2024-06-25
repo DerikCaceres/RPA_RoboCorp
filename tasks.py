@@ -10,11 +10,10 @@ from Assets.Libraries.file import Clear_Images_Folder
 from Assets.Libraries.cfg import Settings
 import logging
 
-
-
+  
 @task
-def project_setup():
-    """Configures the project for UTF 8 output"""
+def project_process():
+        
     logging.info("Starting the bot...")
     
     try:
@@ -23,10 +22,7 @@ def project_setup():
         print(f"Fail to config sys.stdout: {e}")
 
     Clear_Images_Folder(Settings.images_path)
-
     
-@task
-def project_process():
     # Access the current input work item
     try:
         item = workitems.inputs.current

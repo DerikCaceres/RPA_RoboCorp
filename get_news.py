@@ -5,7 +5,7 @@ from RPA.Browser.Selenium import Selenium
 from Assets.Libraries.Data.data import Obtain_months
 
 from Assets.Libraries.file import Zip_Images
-from Assets.Libraries.selenium import Get_News_Atributtes
+from Assets.Libraries.process_news import Get_News_Atributtes
 from Assets.Libraries.cfg import Settings
 import logging
 

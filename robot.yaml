@@ -2,9 +2,6 @@
 # https://github.com/robocorp/rcc/blob/master/docs/recipes.md#what-is-in-robotyaml
 
 tasks:
-  Project Setup:
-    shell: python -m robocorp.tasks run -t project_setup tasks.py
-
   GetNewsAndCreateExcel:
     shell: python -m robocorp.tasks run -t project_process tasks.py
 
