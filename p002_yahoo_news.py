@@ -9,10 +9,12 @@ import logging
 class P002_Access_Site:
     """ Obtém as informações das News """
     
-    def __init__(self):
+    def __init__(self, search_phrase=None, date_range=None):
         logging.info("Acessando o site para obter informações...")
         self.browser = Selenium()
         self.news_data = None
+        self.search_phrase = search_phrase
+        self.date_range = date_range
     
     def __call__(self):
         self.T01_Open_Browser()
@@ -41,7 +43,7 @@ class P002_Access_Site:
 
             # Escrever o texto na barra de busca
             search_input = self.browser.get_webelement(Settings.web_elements['search_bar'])
-            self.browser.input_text(search_input, Settings.search_phrase)
+            self.browser.input_text(search_input, self.search_phrase)
             # Pressionar Enter no campo de busca
             self.browser.press_keys(search_input, 'ENTER')
         
@@ -58,7 +60,7 @@ class P002_Access_Site:
         all_news_collected = False
         news_data = []
         #Get valid search months
-        months = Obtain_months(Settings.date_range)
+        months = Obtain_months(self.date_range)
         current_url = self.browser.get_location()
 
         while not all_news_collected:

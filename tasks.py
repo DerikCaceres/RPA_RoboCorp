@@ -1,5 +1,5 @@
 from robocorp.tasks import task
-
+from robocorp import workitems
 from p002_yahoo_news import P002_Access_Site
 from p003_write_in_excel_file import P003_Write_In_Excel_File
 import locale
@@ -31,9 +31,16 @@ def t01_project_setup():
 
 @task
 def t02_project_process():
+        # Access the current input work item
+    item = workitems.inputs.current
+    print("Received payload:", item.payload)
+    
+    # Extracting 'search_phrase' and 'date_range' from the payload
+    search_phrase = item.payload.get("search_phrase")
+    date_range = item.payload.get("date_range")
 
     # Obtém os dados das notícias
-    news_data = P002_Access_Site()
+    news_data = P002_Access_Site(search_phrase, date_range)
     news_data()
 
     # Escreve no arquivo Excel
