@@ -23,10 +23,14 @@ def Get_News_Atributtes(news, news_parts, news_data):
     word_in_text = Verify_money_in_text(title, description)
     ocurrences = Count_ocurrences(title, description)
 
+
+    image_path_in_zip = os.path.join("output", "Images.zip", f"{page_identifier}.png")
+
+
     news_data.append({
         "Title": title,
         "Description": description,
-        "Filepath": filepath,
+        "Image_path": image_path_in_zip,
         "Word_in_text": word_in_text,
         "Occurrences": ocurrences
     })
@@ -60,3 +64,6 @@ def Download_news_Image(news, page_identifier):
 
     except Exception as e:
         print(f"Erro ao baixar a imagem: {str(e)}")
+
+
+
