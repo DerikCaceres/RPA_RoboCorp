@@ -1,1 +1,24 @@
+# For more details on the format and content:
+# https://github.com/robocorp/rcc/blob/master/docs/recipes.md#what-is-in-robotyaml
+
+tasks:
+  Project Setup:
+    shell: python -m robocorp.tasks run -t t01_project_setup tasks.py
+
+  GetNewsAndCreateExcel:
+    shell: python -m robocorp.tasks run -t t02_project_process tasks.py
+
+
+environmentConfigs:
+  - environment_windows_amd64_freeze.yaml
+  - environment_linux_amd64_freeze.yaml
+  - environment_darwin_amd64_freeze.yaml
+  - conda.yaml
+
+artifactsDir: output
+
+outputs:
+  - name: NewsExcel
+    type: file
+    path: output/news_data.xlsx
 

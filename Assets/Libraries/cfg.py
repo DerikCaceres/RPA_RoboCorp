@@ -18,7 +18,7 @@ class Settings():
     search_phrase = 'economy'
     date_range = 2
     images_path = "Assets\\Libraries\\Images"
-    worksheet_news_path = "Assets\\Libraries\\Worksheets\\news.xlsx"
+    worksheet_news_path = "output\\news.xlsx"
     log_worksheet = os.path.join(Global.log_directory, "Final_worksheet\\Woksheet.log")
     web_elements = {
         "search":"xpath://button[@data-element='search-button']",
