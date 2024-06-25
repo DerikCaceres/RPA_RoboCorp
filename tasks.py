@@ -2,7 +2,7 @@ from robocorp.tasks import task
 from robocorp import workitems
 from p002_yahoo_news import P002_Access_Site
 from p003_write_in_excel_file import P003_Write_In_Excel_File
-import locale
+
 import sys
 import logging
 
@@ -16,8 +16,6 @@ import logging
 def t01_project_setup():
     """Configurações do projeto"""
     logging.info("Starting the bot...")
-    
-    locale.setlocale(locale.LC_ALL, 'pt_PT.UTF-8')  # Corrige o código para 'pt_PT.UTF-8'
     
     try:
         sys.stdout.reconfigure(encoding='utf-8')  # Configura a saída no console com codificação UTF8
