@@ -8,7 +8,7 @@ from Assets.Libraries.Data.data import Count_ocurrences, Remove_Non_Letters, Ver
 def Get_News_Atributtes(news, news_parts, news_data, temp_dir):
     """Get the necessary information to put in Excel"""
 
-    title = news_parts[1]  
+    title = news_parts[1]
     description = news_parts[2]
     
     try:
@@ -54,6 +54,7 @@ def Download_news_Image(news, page_identifier, temp_dir):
             # Save image
             with open(filepath, 'wb') as f:
                 f.write(response.content)
+            print(f"Image saved to {filepath}")
         else:
             print(f"Unable to download image. Status code: {response.status_code}")
 

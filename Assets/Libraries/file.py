@@ -30,3 +30,4 @@ def Zip_Images(temp_dir, output_zip):
             for file in files:
                 file_path = os.path.join(root, file)
                 zipf.write(file_path, os.path.relpath(file_path, temp_dir))
+    print(f"Images have been zipped into {output_zip}")

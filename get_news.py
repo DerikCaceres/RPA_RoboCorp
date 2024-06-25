@@ -66,6 +66,7 @@ class Get_News:
         months = Obtain_months(self.date_range)
         current_url = self.browser.get_location()
 
+        # Create a temporary directory
         with tempfile.TemporaryDirectory() as temp_dir:
             while not all_news_collected:
 
@@ -93,8 +94,9 @@ class Get_News:
                     next_page_url = f"{current_url}&p={page_number}"
                     self.browser.go_to(next_page_url)
 
-        logging.info("News information obtained")
+            # After downloading all images, create a zip file
+            output_zip = os.path.join('output', 'news_images.zip')
+            Zip_Images(temp_dir, output_zip)
+            print(f"Images have been zipped into {output_zip}")
 
-        zip_output_path = os.path.join("output", "Images.zip")
-        Zip_Images(Settings.images_path, zip_output_path)
         return news_data
