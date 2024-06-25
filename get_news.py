@@ -51,9 +51,9 @@ class Get_News:
             self.browser.press_keys(search_input, 'ENTER')
         
         except Exception as e:
-            raise Exception(f"Erro ao buscar notícias: {e}")
+            raise Exception(f"Error when searching for news: {e}")
         
-        logging.info("Noticias obtidas")
+        logging.info("News obtained")
 
 
     def T03_Get_NewsInfo(self):
