@@ -44,7 +44,7 @@ def t02_project_process():
     news_data = news_scraper()  # Call the __call__ method to fetch news data
 
     # Write Excel File
-    P003_Write_In_Excel_File(news_data=news_data.news_data)
+    P003_Write_In_Excel_File(news_data=news_data)
 
     logging.info("Bot execution completed.")
 
