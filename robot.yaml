@@ -19,11 +19,8 @@ environmentConfigs:
 
 artifactsDir: output
 
-PATH:
-  - .
-PYTHONPATH:
-  - .
-ignoreFiles:
-  - .gitignore
+outputs:
+  - name: NewsExcel
+    type: file
+    path: output/news_data.xlsx
 
-condaConfigFile: conda.yaml

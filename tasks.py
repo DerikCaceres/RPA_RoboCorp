@@ -45,19 +45,17 @@ def t02_project_process():
     # Obtém os dados das notícias
     news_scraper = P002_Access_Site(search_phrase, date_range)
     news_data = news_scraper()
-    
-    return news_data  # Return the news_data after scraping
+
+    # Chama a task t03_create_excel com o argumento news_data
+    t03_create_excel(news_data=news_data)
+
 
 @task
-def t03_create_excel():
-    # Access the current input work item
-    item = workitems.inputs.current
-    print("Received payload:", item.payload)
-    
-    # Extracting 'news_data' from the payload
-    news_data = item.payload.get("news_data")
-    
+def t03_create_excel(news_data):
     # Escreve no arquivo Excel
     P003_Write_In_Excel_File(news_data=news_data)
+
+    logging.info("Bot execution completed.")
+
 
     logging.info("Bot execution completed.")
