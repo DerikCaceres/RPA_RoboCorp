@@ -42,13 +42,11 @@ def t02_project_process():
         search_phrase = Settings.search_phrase
         date_range = Settings.date_range
 
-    # Get news data
-    news_data = P002_Access_Site(search_phrase, date_range)
-    news_data()
+    news_scraper = P002_Access_Site(search_phrase, date_range)
+    news_data = news_scraper()  # Call the __call__ method to fetch news data
 
     # Write Excel File
     P003_Write_In_Excel_File(news_data=news_data.news_data)
-
 
     logging.info("Bot execution completed.")
 

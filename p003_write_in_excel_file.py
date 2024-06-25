@@ -1,9 +1,9 @@
+import os
 from Assets.Libraries.Data.pandas import DataFramePrettier
 from Assets.Libraries.file import CreateFile
 from Assets.Libraries.cfg import Settings
 import pandas as pd
 import logging
-import shutil
 
 class P003_Write_In_Excel_File:
     """Registra as informações das notícias em um arquivo Excel"""
@@ -19,7 +19,7 @@ class P003_Write_In_Excel_File:
         news_df = pd.DataFrame(self.news_data)
 
         # Caminho completo para o arquivo Excel de saída
-        excel_file_path = Settings.worksheet_news_path
+        excel_file_path = os.path.join('output', 'news_data.xlsx')
 
         # DataFrame para Excel
         news_df.to_excel(excel_file_path, index=False)
