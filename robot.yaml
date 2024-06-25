@@ -3,10 +3,10 @@
 
 tasks:
   Project Setup:
-    shell: python -m robocorp.tasks run -t t01_project_setup tasks.py
+    shell: python -m robocorp.tasks run -t project_setup tasks.py
 
   GetNewsAndCreateExcel:
-    shell: python -m robocorp.tasks run -t t02_project_process tasks.py
+    shell: python -m robocorp.tasks run -t project_process tasks.py
 
 
 environmentConfigs:

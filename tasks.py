@@ -1,7 +1,7 @@
 from robocorp.tasks import task
 from robocorp import workitems
-from p002_yahoo_news import P002_Access_Site
-from p003_write_in_excel_file import P003_Write_In_Excel_File
+from get_news import Get_News
+from write_in_excel_file import Write_In_Excel_File
 
 import sys
 import logging
@@ -13,21 +13,20 @@ import logging
 
 
 @task
-def t01_project_setup():
-    """Configurações do projeto"""
+def project_setup():
+    """Configures the project for UTF 8 output"""
     logging.info("Starting the bot...")
     
     try:
-        sys.stdout.reconfigure(encoding='utf-8')  # Configura a saída no console com codificação UTF8
+        sys.stdout.reconfigure(encoding='utf-8') 
     except Exception as e:
         print(f"Erro ao configurar sys.stdout: {e}")
 
     Clear_Images_Folder(Settings.images_path)
 
-    logging.info("Arquivo Excel criado com sucesso.")
     
 @task
-def t02_project_process():
+def project_process():
     # Access the current input work item
     try:
         item = workitems.inputs.current
@@ -40,11 +39,11 @@ def t02_project_process():
         search_phrase = Settings.search_phrase
         date_range = Settings.date_range
 
-    news_scraper = P002_Access_Site(search_phrase, date_range)
+    news_scraper = Get_News(search_phrase, date_range)
     news_data = news_scraper()  # Call the __call__ method to fetch news data
 
     # Write Excel File
-    P003_Write_In_Excel_File(news_data=news_data)
+    Write_In_Excel_File(news_data=news_data)
 
     logging.info("Bot execution completed.")
 
