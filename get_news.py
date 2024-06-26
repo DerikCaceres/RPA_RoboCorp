@@ -82,7 +82,7 @@ class Get_News:
                     news_parts = news.text.split('\n')
                     date = news_parts[3]
                     if any(month in date for month in months):
-                        news_data = Get_News_Atributtes(news, news_parts, news_data, temp_dir)
+                        news_data = Get_News_Atributtes(news, news_parts, news_data, temp_dir, self.search_phrase)
                     else:
                         # If the date is not in range, end the loop
                         all_news_collected = True

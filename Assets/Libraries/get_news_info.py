@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from Assets.Libraries.Data.data import Count_ocurrences, Remove_Non_Letters, Verify_money_in_text
 
 
-def Get_News_Atributtes(news, news_parts, news_data, temp_dir):
+def Get_News_Atributtes(news, news_parts, news_data, temp_dir, search_phrase):
     """Get the necessary information to put in Excel"""
 
     title = news_parts[1]
@@ -19,7 +19,7 @@ def Get_News_Atributtes(news, news_parts, news_data, temp_dir):
     
     Download_news_Image(news, page_identifier, temp_dir)
     word_in_text = Verify_money_in_text(title, description)
-    ocurrences = Count_ocurrences(title, description)
+    ocurrences = Count_ocurrences(title, description, search_phrase)
 
 
     image_path_in_zip = os.path.join("output", "Images.zip", f"{page_identifier}.png")

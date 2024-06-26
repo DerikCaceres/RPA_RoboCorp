@@ -19,12 +19,12 @@ def Verify_money_in_text(title, description):
     return False
 
 
-def Count_ocurrences(title, description):
+def Count_ocurrences(title, description, search_phrase):
 
     # Convert everything to lowercase to make a case insensitive search
     title_lower = title.lower()
     description_lower = description.lower()
-    phrase_searched = Settings.search_phrase.lower()
+    phrase_searched = search_phrase.lower()
     # Count occurrences in title and description
     ocurrences_title = title_lower.count(phrase_searched)
     ocurrences_description = description_lower.count(phrase_searched)
