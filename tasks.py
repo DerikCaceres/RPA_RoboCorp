@@ -20,8 +20,6 @@ def project_process():
         sys.stdout.reconfigure(encoding='utf-8') 
     except Exception as e:
         print(f"Fail to config sys.stdout: {e}")
-
-    Clear_Images_Folder(Settings.images_path)
     
     # Access the current input work item
     try:
