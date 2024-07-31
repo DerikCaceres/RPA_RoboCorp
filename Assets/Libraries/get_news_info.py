@@ -2,7 +2,8 @@
 import os
 import requests
 from selenium.webdriver.common.by import By
-from Assets.Libraries.Data.data import Count_ocurrences, Remove_Non_Letters, Verify_money_in_text
+from Assets.Libraries.text_utils import remove_non_letters, verify_money_in_text, count_occurrences
+
 
 
 def Get_News_Atributtes(news, news_parts, news_data, temp_dir, search_phrase):
@@ -18,8 +19,8 @@ def Get_News_Atributtes(news, news_parts, news_data, temp_dir, search_phrase):
     #getting image
     
     Download_news_Image(news, page_identifier, temp_dir)
-    word_in_text = Verify_money_in_text(title, description)
-    ocurrences = Count_ocurrences(title, description, search_phrase)
+    word_in_text = verify_money_in_text(title, description)
+    ocurrences = count_occurrences(title, description, search_phrase)
 
 
     image_path_in_zip = os.path.join("output", "Images.zip", f"{page_identifier}.png")
@@ -44,19 +45,16 @@ def Download_news_Image(news, page_identifier, temp_dir):
 
         # Download image
         response = requests.get(img_url, stream=True)
-        if response.status_code == 200:
-            # Verify if path exists
-            if not os.path.exists(temp_dir):
-                os.makedirs(temp_dir)
 
-            filepath = os.path.join(temp_dir, f"{Remove_Non_Letters(page_identifier)}.png")
+        # Verify if path exists
+        if not os.path.exists(temp_dir):
+            os.makedirs(temp_dir)
 
-            # Save image
-            with open(filepath, 'wb') as f:
-                f.write(response.content)
-            print(f"Image saved to {filepath}")
-        else:
-            print(f"Unable to download image. Status code: {response.status_code}")
+        filepath = os.path.join(temp_dir, f"{remove_non_letters(page_identifier)}.png")
+
+        # Save image
+        with open(filepath, 'wb') as f:
+            f.write(response.content)
 
     except Exception as e:
-        print(f"Error downloading image: {str(e)}")
+        raise Exception(f"Error downloading image: {str(e)}")

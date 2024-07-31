@@ -2,11 +2,8 @@ from robocorp.tasks import task
 from robocorp import workitems
 from get_news import Get_News
 from write_in_excel_file import Write_In_Excel_File
-
 import sys
 import logging
-
-from Assets.Libraries.file import Clear_Images_Folder
 from Assets.Libraries.cfg import Settings
 import logging
 
@@ -19,12 +16,11 @@ def project_process():
     try:
         sys.stdout.reconfigure(encoding='utf-8') 
     except Exception as e:
-        print(f"Fail to config sys.stdout: {e}")
+        raise Exception (f"Fail to config sys.stdout: {e}")
     
     # Access the current input work item
     try:
         item = workitems.inputs.current
-        print("Received payload:", item.payload)
         
         # Extracting 'search_phrase' and 'date_range' from the payload
         search_phrase = item.payload.get("search_phrase")

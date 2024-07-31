@@ -2,8 +2,9 @@
 import os
 import tempfile
 from RPA.Browser.Selenium import Selenium
-from Assets.Libraries.Data.data import Obtain_months
 
+import time
+from Assets.Libraries.date_utils import obtain_months
 from Assets.Libraries.file import Zip_Images
 from Assets.Libraries.get_news_info import Get_News_Atributtes
 from Assets.Libraries.cfg import Settings
@@ -22,7 +23,7 @@ class Get_News:
     def __call__(self):
         self.Open_Browser()
         self.Search_News()
-        self.news_data = self.T03_Get_NewsInfo()
+        self.news_data = self.Get_NewsInfo()
         return self.news_data
 
 
@@ -49,6 +50,14 @@ class Get_News:
             self.browser.input_text(search_input, self.search_phrase)
             # Press enter 
             self.browser.press_keys(search_input, 'ENTER')
+            self.browser.wait_until_page_contains_element('class=select-label')
+            #Selecet newest news
+            self.browser.click_element('class=select-input')
+            select_input = self.browser.get_webelement('class=select-input')
+            self.browser.wait_until_page_contains_element('class=select-label')
+            self.browser.select_from_list_by_label(select_input, 'Newest')
+            
+            
         
         except Exception as e:
             raise Exception(f"Error when searching for news: {e}")
@@ -56,47 +65,47 @@ class Get_News:
         logging.info("News obtained")
 
 
-    def T03_Get_NewsInfo(self):
+    def Get_NewsInfo(self):
         """Get information from the news found"""
 
-        page_number = 1
-        all_news_collected = False
+
+        all_news_obtained = False
         news_data = []
         #Get valid search months
-        months = Obtain_months(self.date_range)
-        current_url = self.browser.get_location()
+        months = obtain_months(self.date_range)
 
         # Create a temporary directory
         with tempfile.TemporaryDirectory() as temp_dir:
-            while not all_news_collected:
+            while not all_news_obtained:
 
                 self.browser.wait_until_page_contains_element(Settings.web_elements['news'], timeout=25)
                 news_elements = self.browser.find_elements(Settings.web_elements['news'])
 
                 if not news_elements:
                     # If there are no more news elements, exit the loop
-                    all_news_collected = True
+                    all_news_obtained = True
                     break
 
                 for news in news_elements:
                     news_parts = news.text.split('\n')
+                    if news_parts[1] == 'FOR SUBSCRIBERS':
+                        news_parts.pop(1)
                     date = news_parts[3]
-                    if any(month in date for month in months):
+                    if any(month in date for month in months) or 'hours ago' in date or 'minutes ago' in date or 'hour ago' in date:
                         news_data = Get_News_Atributtes(news, news_parts, news_data, temp_dir, self.search_phrase)
-                    else:
-                        # If the date is not in range, end the loop
-                        all_news_collected = True
-                        break
 
-                if not all_news_collected:
+
+                if not all_news_obtained:
                     #Advance to the next page
-                    page_number += 1
-                    next_page_url = f"{current_url}&p={page_number}"
-                    self.browser.go_to(next_page_url)
+                    try:
+                        self.browser.click_element('class=search-results-module-next-page')
+                    except:
+                        all_news_obtained = True
+                        pass
+
 
             # After downloading all images, create a zip file
             output_zip = os.path.join('output', 'news_images.zip')
             Zip_Images(temp_dir, output_zip)
-            print(f"Images have been zipped into {output_zip}")
 
         return news_data

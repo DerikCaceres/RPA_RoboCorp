@@ -18,9 +18,7 @@ def Clear_Images_Folder(path):
 
     if os.path.exists(path) and os.path.isdir(path):
         shutil.rmtree(path)
-        print(f"Folder '{path}' has been deleted.")
-    else:
-        print(f"Folder '{path}' does not exist.")
+
 
 
 def Zip_Images(temp_dir, output_zip):
@@ -30,4 +28,4 @@ def Zip_Images(temp_dir, output_zip):
             for file in files:
                 file_path = os.path.join(root, file)
                 zipf.write(file_path, os.path.relpath(file_path, temp_dir))
-    print(f"Images have been zipped into {output_zip}")
+
