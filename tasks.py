@@ -1,39 +1,43 @@
-from robocorp.tasks import task
-from robocorp import workitems
-from get_news import Get_News
-from write_in_excel_file import Write_In_Excel_File
 import sys
 import logging
-from Assets.Libraries.cfg import Settings
-import logging
 
-  
+from robocorp.tasks import task
+from robocorp import workitems
+
+from get_news import GetNews
+from write_in_excel_file import Write_In_Excel_File
+from Assets.Libraries.cfg import Settings
+
+
 @task
 def project_process():
-        
-    logging.info("Starting the bot...")
+    """Main function to fetch news and write to an Excel file."""
     
+    logging.info("Starting the bot...")
+
+    # Configure stdout to handle UTF-8
     try:
-        sys.stdout.reconfigure(encoding='utf-8') 
+        sys.stdout.reconfigure(encoding='utf-8')
     except Exception as e:
-        raise Exception (f"Fail to config sys.stdout: {e}")
+        raise Exception(f"Failed to configure sys.stdout: {e}")
     
     # Access the current input work item
     try:
         item = workitems.inputs.current
         
-        # Extracting 'search_phrase' and 'date_range' from the payload
+        # Extract 'search_phrase' and 'date_range' from the payload
         search_phrase = item.payload.get("search_phrase")
         date_range = item.payload.get("date_range")
     except:
+        # Fallback to default settings
         search_phrase = Settings.search_phrase
         date_range = Settings.date_range
 
-    news_data = Get_News(search_phrase, date_range)
-    news_content = news_data()  # Call the __call__ method to fetch news data
+    # Instantiate Get_News and fetch news content
+    news_fetcher = GetNews(search_phrase, date_range)
+    news_content = news_fetcher()  # Call the __call__ method to fetch news data
 
-    # Write Excel File
-    Write_In_Excel_File(news_content=news_content)
+    # Write news content to Excel file
+    Write_In_Excel_File(news_data=news_content)
 
     logging.info("Bot execution completed.")
-
