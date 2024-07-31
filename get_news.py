@@ -13,12 +13,12 @@ import logging
 class Get_News:
     """Open the portal, search for the news and get the information for each one"""
     
-    def __init__(self, search_phrase=None, date_range=None):
+    def __init__(self, phrase_to_search=None, news_period=None):
         logging.info("Accessing the website for information...")
         self.browser = Selenium()
         self.news_data = None
-        self.search_phrase = search_phrase
-        self.date_range = date_range
+        self.phrase_to_search = phrase_to_search
+        self.news_period = news_period
     
     def __call__(self):
         self.Open_Browser()
@@ -47,7 +47,7 @@ class Get_News:
 
             # Write on search bar
             search_input = self.browser.get_webelement(Settings.web_elements['search_bar'])
-            self.browser.input_text(search_input, self.search_phrase)
+            self.browser.input_text(search_input, self.phrase_to_search)
             # Press enter 
             self.browser.press_keys(search_input, 'ENTER')
             self.browser.wait_until_page_contains_element('class=select-label')
@@ -71,8 +71,8 @@ class Get_News:
 
         all_news_obtained = False
         news_data = []
-        #Get valid search months
-        months = obtain_months(self.date_range)
+        #Get valid search months to news period
+        months_possible = obtain_months(self.news_period)
 
         # Create a temporary directory
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -87,12 +87,12 @@ class Get_News:
                     break
 
                 for news in news_elements:
-                    news_parts = news.text.split('\n')
-                    if news_parts[1] == 'FOR SUBSCRIBERS':
-                        news_parts.pop(1)
-                    date = news_parts[3]
-                    if any(month in date for month in months) or 'hours ago' in date or 'minutes ago' in date or 'hour ago' in date:
-                        news_data = Get_News_Atributtes(news, news_parts, news_data, temp_dir, self.search_phrase)
+                    news_content = news.text.split('\n')
+                    if news_content[1] == 'FOR SUBSCRIBERS':
+                        news_content.pop(1)
+                    date = news_content[3]
+                    if any(month in date for month in months_possible) or 'hours ago' in date or 'minutes ago' in date or 'hour ago' in date:
+                        news_data = Get_News_Atributtes(news, news_content, news_data, temp_dir, self.phrase_to_search)
 
 
                 if not all_news_obtained:
