@@ -2,7 +2,7 @@ from datetime import time
 import os
 import tempfile
 import logging
-
+import time
 
 from RPA.Browser.Selenium import Selenium
 from Assets.Libraries.date_utils import obtain_months
@@ -65,6 +65,7 @@ class GetNews:
         news_data = []
         months_possible = obtain_months(self.news_period)
 
+        time.sleep(5)
         with tempfile.TemporaryDirectory() as temp_dir:
             while not all_news_obtained:
                 self.browser.wait_until_page_contains_element(Settings.web_elements['news'], timeout=25)
@@ -74,7 +75,7 @@ class GetNews:
                     all_news_obtained = True
                     break
 
-                news_elements = self.browser.find_elements(Settings.web_elements['news'])
+                
                 for news in news_elements:
 
                     news_content = news.text.split('\n')

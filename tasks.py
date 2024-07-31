@@ -21,7 +21,6 @@ def project_process():
     except Exception as e:
         raise Exception(f"Failed to configure sys.stdout: {e}")
     
-    # Access the current input work item
     try:
         item = workitems.inputs.current
         
@@ -38,6 +37,6 @@ def project_process():
     news_content = news_fetcher()  # Call the __call__ method to fetch news data
 
     # Write news content to Excel file
-    Write_In_Excel_File(news_data=news_content)
+    Write_In_Excel_File(news_content=news_content)
 
     logging.info("Bot execution completed.")

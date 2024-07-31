@@ -19,7 +19,6 @@ def get_news_attributes(news, news_parts, news_data, temp_dir, search_phrase):
     except IndexError:
         page_identifier = ' '.join(title.split(' ')[0:3])
     
-    # Download image
     download_news_image(news, page_identifier, temp_dir)
     
     word_in_text = verify_money_in_text(title, description)
