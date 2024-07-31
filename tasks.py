@@ -23,7 +23,6 @@ def project_process():
     
     try:
         item = workitems.inputs.current
-        
         # Extract 'search_phrase' and 'date_range' from the payload
         search_phrase = item.payload.get("search_phrase")
         date_range = item.payload.get("date_range")

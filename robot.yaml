@@ -17,5 +17,5 @@ artifactsDir: output
 outputs:
   - name: NewsExcel
     type: file
-    path: output/news_data.xlsx
+    path: output/data_output.xlsx
 
