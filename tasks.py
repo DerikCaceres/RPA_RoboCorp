@@ -23,16 +23,16 @@ def project_process():
     
     try:
         item = workitems.inputs.current
-        # Extract 'search_phrase' and 'date_range' from the payload
         search_phrase = item.payload.get("search_phrase")
         date_range = item.payload.get("date_range")
+        limit_pages = item.payload.get("limit_pages")
     except:
-        # Fallback to default settings
         search_phrase = Settings.search_phrase
         date_range = Settings.date_range
+        limit_pages = Settings.limit_pages
 
     # Instantiate Get_News and fetch news content
-    news_fetcher = GetNews(search_phrase, date_range)
+    news_scraper = GetNews(search_phrase, date_range, limit_pages)
     news_content = news_fetcher()  # Call the __call__ method to fetch news data
 
     # Write news content to Excel file
