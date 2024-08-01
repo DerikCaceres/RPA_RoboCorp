@@ -5,7 +5,7 @@ class Settings():
     Site_Url = 'https://www.latimes.com/'
     search_phrase = 'economy'
     date_range = 2
-    limit_pages = 20
+    limit_pages = 10
     worksheet_news_path = "output\\news.xlsx"
     web_elements = {
         "search":"css:button[data-element='search-button']",

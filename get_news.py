@@ -118,8 +118,11 @@ class GetNews:
                     news_content = news.text.split('\n')
                     if news_content[1] == 'FOR SUBSCRIBERS':
                         news_content.pop(1)
+                    try:
+                        date = news_content[3]
+                    except:
+                        date = news_content[2]
 
-                    date = news_content[3]
                     if (any(month in date for month in months_possible) or
                         'hours ago' in date or
                         'minutes ago' in date or
@@ -138,9 +141,10 @@ class GetNews:
                         count+=1
                         self.browser.click_element('class=search-results-module-next-page')
                     except Exception:
-                        logging.info("No more pages available, stopping search")
+                        break
 
-                if self.limit_pages == 0 and count >= self.limit_pages:
+
+                if count >= self.limit_pages:
                     logging.info(f"Reached limit of {self.limit_pages} pages, stopping search")
                     break
                     
