@@ -23,10 +23,37 @@ class GetNews:
         self.limit_pages = limit_pages
 
     def __call__(self):
-        self.open_browser()
-        self.search_news()
+        self.open_browser_with_retry()
+        self.search_news_with_retry()
         self.news_data = self.get_news_info()
         return self.news_data
+    
+    def open_browser_with_retry(self, retries=3):
+        """Open the browser and navigate to the website with retry logic."""
+        attempt = 0
+        while attempt < retries:
+            try:
+                self.open_browser()
+                return
+            except Exception as e:
+                attempt += 1
+                logging.error(f"Attempt {attempt}: Failed to open browser: {e}")
+                if attempt >= retries:
+                    raise Exception("Max retries reached for opening browser")
+                
+    def search_news_with_retry(self, retries=3):
+        """Search for news on the portal with retry logic."""
+        attempt = 0
+        while attempt < retries:
+            try:
+                self.search_news()
+                return
+            except Exception as e:
+                attempt += 1
+                logging.error(f"Attempt {attempt}: Error when searching for news: {e}")
+                if attempt >= retries:
+                    raise Exception("Max retries reached for searching news")
+                
 
     def open_browser(self):
         """Open the browser and navigate to the website."""
@@ -36,6 +63,7 @@ class GetNews:
             raise Exception(f"Failed to open browser: {e}")
 
         logging.info("Browser opened")
+
 
     def search_news(self):
         """Search for news on the portal."""
