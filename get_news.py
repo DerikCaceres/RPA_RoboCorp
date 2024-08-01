@@ -135,7 +135,9 @@ class GetNews:
                             temp_dir,
                             self.phrase_to_search
                         )
-
+                    else:
+                        break
+                    
                 if not all_news_obtained:
                     try:
                         count+=1
@@ -145,6 +147,7 @@ class GetNews:
 
 
                 if count >= self.limit_pages:
+
                     logging.info(f"Reached limit of {self.limit_pages} pages, stopping search")
                     break
                     
