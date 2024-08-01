@@ -14,12 +14,13 @@ from Assets.Libraries.cfg import Settings
 class GetNews:
     """Open the portal, search for the news, and get the information for each one."""
 
-    def __init__(self, phrase_to_search=None, news_period=None):
+    def __init__(self, phrase_to_search=None, news_period=None, limit_pages=None):
         logging.info("Accessing the website for information...")
         self.browser = Selenium()
         self.news_data = None
         self.phrase_to_search = phrase_to_search
         self.news_period = news_period
+        self.limit_pages = limit_pages
 
     def __call__(self):
         self.open_browser()
@@ -66,6 +67,7 @@ class GetNews:
         months_possible = obtain_months(self.news_period)
 
         time.sleep(5)
+        count = 0
         with tempfile.TemporaryDirectory() as temp_dir:
             while not all_news_obtained:
                 self.browser.wait_until_page_contains_element(Settings.web_elements['news'], timeout=25)
@@ -98,10 +100,14 @@ class GetNews:
 
                 if not all_news_obtained:
                     try:
+                        count+=1
                         self.browser.click_element('class=search-results-module-next-page')
                     except Exception:
                         all_news_obtained = True
-
+                        
+                if count >= self.limit_pages:
+                    break
+                    
             output_zip = os.path.join('output', 'news_images.zip')
             Zip_Images(temp_dir, output_zip)
 
