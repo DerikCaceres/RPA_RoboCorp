@@ -47,12 +47,12 @@ class GetNews:
             self.browser.input_text(search_input, self.phrase_to_search)
             self.browser.press_keys(search_input, 'ENTER')
 
-            self.browser.wait_until_page_contains_element('class=select-label')
+            self.browser.wait_until_page_contains_element(Settings.web_elements['menu_newest'])
 
             # Select 'Newest' news
-            self.browser.click_element('class=select-input')
-            select_input = self.browser.get_webelement('class=select-input')
-            self.browser.wait_until_page_contains_element('class=select-label')
+            self.browser.click_element(Settings.web_elements['newest'])
+            select_input = self.browser.get_webelement(Settings.web_elements['newest'])
+            self.browser.wait_until_page_contains_element(Settings.web_elements['menu_newest'])
             self.browser.select_from_list_by_label(select_input, 'Newest')
 
         except Exception as e:
