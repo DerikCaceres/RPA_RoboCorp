@@ -140,7 +140,7 @@ class GetNews:
                     except Exception:
                         logging.info("No more pages available, stopping search")
 
-                if self.limit_pages is not None and count >= self.limit_pages:
+                if self.limit_pages == 0 count >= self.limit_pages:
                     logging.info(f"Reached limit of {self.limit_pages} pages, stopping search")
                     break
                     
