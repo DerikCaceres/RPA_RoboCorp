@@ -37,7 +37,7 @@ def get_news_attributes(news, news_parts, news_data, temp_dir, search_phrase):
         "Word_in_text": word_in_text,
         "Occurrences": occurrences
     })
-
+    logging.info(f"News attributes added: {title}")
     return news_data
 
 
@@ -62,7 +62,8 @@ def download_news_image(news, page_identifier, temp_dir, retries=3):
             # Save image
             with open(filepath, 'wb') as f:
                 f.write(response.content)
-            
+                
+            logging.info(f"Image downloaded and saved to {filepath}")
             return  # Exit the function if successful
 
         except requests.RequestException as e:

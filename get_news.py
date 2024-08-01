@@ -23,9 +23,11 @@ class GetNews:
         self.limit_pages = limit_pages
 
     def __call__(self):
+        logging.info("Starting news retrieval process")
         self.open_browser_with_retry()
         self.search_news_with_retry()
         self.news_data = self.get_news_info()
+        logging.info("News retrieval process completed")
         return self.news_data
     
     def open_browser_with_retry(self, retries=3):
@@ -34,6 +36,7 @@ class GetNews:
         while attempt < retries:
             try:
                 self.open_browser()
+                logging.info("Browser opened successfully")
                 return
             except Exception as e:
                 attempt += 1
@@ -82,6 +85,7 @@ class GetNews:
             select_input = self.browser.get_webelement(Settings.web_elements['newest'])
             self.browser.wait_until_page_contains_element(Settings.web_elements['menu_newest'])
             self.browser.select_from_list_by_label(select_input, 'Newest')
+            logging.info("Selected 'Newest' news")
 
         except Exception as e:
             raise Exception(f"Error when searching for news: {e}")
@@ -93,6 +97,7 @@ class GetNews:
         all_news_obtained = False
         news_data = []
         months_possible = obtain_months(self.news_period)
+        logging.info(f"Months considered: {months_possible}")
 
         time.sleep(5)
         count = 0
@@ -100,9 +105,11 @@ class GetNews:
             while not all_news_obtained:
                 self.browser.wait_until_page_contains_element(Settings.web_elements['news'], timeout=25)
                 news_elements = self.browser.find_elements(Settings.web_elements['news'])
+                logging.info(f"Found {len(news_elements)} news elements on page {count + 1}")
 
                 if not news_elements:
                     all_news_obtained = True
+                    logging.info("No news elements found, stopping search")
                     break
 
                 
