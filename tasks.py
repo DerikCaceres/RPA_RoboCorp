@@ -33,7 +33,7 @@ def project_process():
 
     # Instantiate Get_News and fetch news content
     news_scraper = GetNews(search_phrase, date_range, limit_pages)
-    news_content = news_fetcher()  # Call the __call__ method to fetch news data
+    news_content = news_scraper()  # Call the __call__ method to fetch news data
 
     # Write news content to Excel file
     Write_In_Excel_File(news_content=news_content)
