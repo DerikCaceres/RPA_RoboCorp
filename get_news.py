@@ -138,9 +138,10 @@ class GetNews:
                         count+=1
                         self.browser.click_element('class=search-results-module-next-page')
                     except Exception:
-                        all_news_obtained = True
-                        
-                if count >= self.limit_pages:
+                        logging.info("No more pages available, stopping search")
+
+                if self.limit_pages is not None and count >= self.limit_pages:
+                    logging.info(f"Reached limit of {self.limit_pages} pages, stopping search")
                     break
                     
             output_zip = os.path.join('output', 'news_images.zip')
